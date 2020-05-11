@@ -1,0 +1,28 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+bases:
+  - ../../base
+
+nameSuffix: -example
+
+commonLabels:
+    app: neo4j-community-example
+
+resources:
+  - ingress.yaml
+
+patchesStrategicMerge:
+  - statefulset.yaml
+
+configMapGenerator:
+  - name: neo4j-community
+    behavior: merge
+    literals:
+      - AUTH_ENABLED=false
+
+secretGenerator:
+  - name: neo4j-community
+    behavior: replace
+    literals:
+      - NEO4J_AUTH=none

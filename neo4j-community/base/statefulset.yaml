@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: neo4j-community
+  labels:
+    app: neo4j-community
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: neo4j-community
+  serviceName: neo4j-community
+  template:
+    metadata:
+      labels:
+        app: neo4j-community
+    spec:
+      containers:
+      - name: neo4j-community
+        image: neo4j:4.0.4
+        imagePullPolicy: IfNotPresent
+        envFrom:
+          - configMapRef:
+              name: neo4j-community
+          - secretRef:
+              name: neo4j-community
+        ports:
+        - containerPort: 7474
+          name: browser
+        - containerPort: 7687
+          name: bolt
+        volumeMounts:
+        - name: datadir
+          mountPath: /data
+        - name: plugins
+          mountPath: /plugins
+        resources: {}
+      volumes:
+        - name: datadir
+          emptyDir: {}
+        - name: plugins
+          emptyDir: {}

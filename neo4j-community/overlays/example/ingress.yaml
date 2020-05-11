@@ -1,0 +1,15 @@
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: neo4j-community
+  labels:
+    app: neo4j-community
+spec:
+  rules:
+    - host: ""
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: neo4j-community
+              servicePort: 7474

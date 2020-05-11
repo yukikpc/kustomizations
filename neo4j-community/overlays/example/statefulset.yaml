@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: neo4j-community
+spec:
+  template:
+    spec:
+      volumes:
+        - name: datadir
+          $patch: delete
+  volumeClaimTemplates:
+    - metadata:
+        name: datadir
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        storageClassName: standard
+        resources:
+          requests:
+            storage: 10Gi
