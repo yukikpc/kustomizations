@@ -1,0 +1,21 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - deployment.yaml
+  - service.yaml
+
+configMapGenerator:
+  - name: ldap-self-service-password
+    literals:
+      - SERVER_HOSTNAME=example.org
+      - VIRTUAL_SUBDIR=lssp
+      - LDAP_URL=ldap://openldap.default.svc.cluster.local:389
+      - LDAP_USER=cn=admin,dc=example,dc=org
+      - LDAP_BASE=ou=users,dc=example,dc=org
+      - LDAP_STARTTLS=false
+
+secretGenerator:
+  - name: ldap-self-service-password
+    literals:
+      - LDAP_PASS=changeme

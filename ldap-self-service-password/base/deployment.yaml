@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ldap-self-service-password
+  labels:
+    app: ldap-self-service-password
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: ldap-self-service-password
+  template:
+    metadata:
+      labels:
+        app: ldap-self-service-password
+    spec:
+      containers:
+        - name: ldap-self-service-password
+          image: dtwardow/ldap-self-service-password:v1.3
+          imagePullPolicy: IfNotPresent
+          envFrom:
+            - configMapRef:
+                name: ldap-self-service-password
+            - secretRef:
+                name: ldap-self-service-password
+          ports:
+            - name: http
+              containerPort: 80
+              protocol: TCP

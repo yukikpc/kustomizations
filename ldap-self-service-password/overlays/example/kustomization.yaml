@@ -1,0 +1,27 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+bases:
+  - ../../base
+
+namespace: ldap
+nameSuffix: -example
+
+commonLabels:
+    app: ldap-self-service-password-example
+
+resources:
+  - ingress.yaml
+
+configMapGenerator:
+  - name: ldap-self-service-password
+    behavior: merge
+    literals:
+      - SERVER_HOSTNAME=""
+      - LDAP_URL=ldap://openldap.ldap.svc.cluster.local:389
+
+secretGenerator:
+  - name: ldap-self-service-password
+    behavior: replace
+    literals:
+      - LDAP_PASS=CkoA7KNfUxUrCJKWRxkOpGxnK5znfpkO
