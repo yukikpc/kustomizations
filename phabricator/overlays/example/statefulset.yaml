@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: phabricator
+spec:
+  template:
+    spec:
+      containers:
+        - name: phabricator
+          livenessProbe:
+            httpGet:
+              httpHeaders:
+              - name: Host
+                value: localhost
+          readinessProbe:
+            httpGet:
+              httpHeaders:
+              - name: Host
+                value: localhost
+      volumes:
+        - name: data
+          $patch: delete
+  volumeClaimTemplates:
+    - metadata:
+        name: data
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        storageClassName: standard
+        resources:
+          requests:
+            storage: 10Gi

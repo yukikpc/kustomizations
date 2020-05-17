@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: phabricator
+  labels:
+    app: phabricator
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: phabricator
+  serviceName: phabricator
+  template:
+    metadata:
+      labels:
+        app: phabricator
+    spec:
+      containers:
+        - name: phabricator
+          image: yukikpc/phabricator
+          imagePullPolicy: IfNotPresent
+          envFrom:
+            - configMapRef:
+                name: phabricator
+            - secretRef:
+                name: phabricator
+          ports:
+          - name: http
+            containerPort: 80
+            protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /status/
+              port: http
+          readinessProbe:
+            httpGet:
+              path: /status/
+              port: http
+          volumeMounts:
+            - name: data
+              mountPath: /var/lib/phabricator
+      volumes:
+        - name: data
+          emptyDir:

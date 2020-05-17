@@ -1,0 +1,15 @@
+apiVersion: networking.k8s.io/v1beta1
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: phabricator
+  labels:
+    app: phabricator
+spec:
+  rules:
+    - host: localhost
+      http:
+        paths:
+          - backend:
+              serviceName: phabricator
+              servicePort: 80

@@ -1,0 +1,22 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - statefulset.yaml
+  - service.yaml
+
+configMapGenerator:
+  - name: phabricator
+    literals:
+      - PHABRICATOR_HOST=""
+      - PHABRICATOR_REPO_LOCAL_PATH=/var/lib/phabricator/repo
+      - PHABRICATOR_LOG_HOME=/var/lib/phabricator/log
+      - PHABRICATOR_LOG_PHD_HOME=/var/lib/phabricator/log/phd
+      - MYSQL_HOST=localhost
+      - MYSQL_PORT=3306
+      - MYSQL_USER=phabricator
+
+secretGenerator:
+  - name: phabricator
+    literals:
+      - MYSQL_PASSWORD=phabricator
