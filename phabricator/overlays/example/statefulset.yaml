@@ -7,7 +7,6 @@ spec:
     spec:
       containers:
         - name: phabricator
-          image: yukikpc/phabricator:develop
           livenessProbe:
             httpGet:
               httpHeaders:
