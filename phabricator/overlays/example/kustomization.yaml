@@ -15,5 +15,10 @@ resources:
 patchesStrategicMerge:
   - statefulset.yaml
 
-patchesStrategicMerge:
-  - statefulset.yaml
+configMapGenerator:
+  - name: phabricator
+    behavior: merge
+    literals:
+      - PABRICATOR_METAMTA_DEFAULT_ADDRESS=noreply@example.jp
+    files:
+      - PABRICATOR_CLUSTER_MAILERS_JSON=./files/mailers.json

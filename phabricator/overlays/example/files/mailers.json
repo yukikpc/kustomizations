@@ -1,0 +1,10 @@
+[
+  {
+    "key": "stmp",
+    "type": "smtp",
+    "options": {
+      "host": "smtp.example.jp",
+      "port": 25
+    }
+  }
+]

@@ -10,6 +10,7 @@ configMapGenerator:
     literals:
       - PHABRICATOR_HOST=""
       - PHABRICATOR_REPO_LOCAL_PATH=/var/lib/phabricator/repo
+      - PHABRICATOR_STORAGE_LOCAL_PATH=/var/lib/phabricator/storage
       - PHABRICATOR_LOG_HOME=/var/lib/phabricator/log
       - PHABRICATOR_LOG_PHD_HOME=/var/lib/phabricator/log/phd
       - MYSQL_HOST=localhost
